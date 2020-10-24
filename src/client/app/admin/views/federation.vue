@@ -5,6 +5,7 @@
 		<section class="fit-top">
 			<ui-input class="target" v-model="target" type="text" @enter="showInstance()">
 				<span>{{ $t('host') }}</span>
+				<template #prefix><fa :icon="faServer"/></template>
 			</ui-input>
 			<ui-button @click="showInstance()"><fa :icon="faSearch"/> {{ $t('lookup') }}</ui-button>
 
