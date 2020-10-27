@@ -24,6 +24,7 @@
 				<mk-user-name :user="appearNote.user"/>
 			</router-link>
 			<span class="username"><mk-acct :user="appearNote.user"/></span>
+			<x-instance-info v-if="appearNote.user.instance" :instance="appearNote.user.instance" />
 			<div class="info">
 				<router-link class="time" :to="appearNote | notePage">
 					<mk-time :time="appearNote.createdAt"/>
@@ -98,12 +99,14 @@ import i18n from '../../../i18n';
 import XSub from './note.sub.vue';
 import noteSubscriber from '../../../common/scripts/note-subscriber';
 import noteMixin from '../../../common/scripts/note-mixin';
+import XInstanceInfo from '../../../common/views/components/instance-info.vue';
 
 export default Vue.extend({
 	i18n: i18n('desktop/views/components/note-detail.vue'),
 
 	components: {
-		XSub
+		XSub,
+		XInstanceInfo
 	},
 
 	mixins: [noteMixin(), noteSubscriber('note')],

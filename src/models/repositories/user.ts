@@ -6,6 +6,8 @@ import { ensure } from '../../prelude/ensure';
 import config from '../../config';
 import { SchemaType } from '../../misc/schema';
 import { awaitAll } from '../../prelude/await-all';
+import { registerOrFetchInstanceDoc } from '../services/register-or-fetch-instance-doc';
+import { toPunyNullable } from '../misc/convert-host';
 
 export type PackedUser = SchemaType<typeof packedUserSchema>;
 
@@ -109,6 +111,28 @@ export class UserRepository extends Repository<User> {
 		const profile = opts.detail ? await UserProfiles.findOne(user.id).then(ensure) : null;
 
 		const falsy = opts.detail ? false : undefined;
+
+//		const fetchInstance = async () => {
+			//if (user.host == null) return null;
+/*
+			const info = {
+				host: null as unknown,
+				name: null as unknown,
+				softwareName: null as unknown,
+				softwareVersion: null as unknown,
+				iconUrl: null as unknown,
+			};*/
+/*
+			const instance = await registerOrFetchInstanceDoc(user.host);
+			info.host = toPunyNullable(user.host);
+			info.name = instance?.name || null;
+			info.softwareName = instance?.softwareName || null;
+			info.softwareVersion = instance?.softwareVersion || null;
+			info.iconUrl = instance?.iconUrl || null;
+			return info;
+		};*/
+
+		//user.instance = fetchInstance();
 
 		const packed = {
 			id: user.id,

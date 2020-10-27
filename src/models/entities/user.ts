@@ -201,6 +201,10 @@ export class User {
 	})
 	public token: string | null;
 
+	//@Index()
+	//@Column({})
+	//public instance: Promise<null | { softwareName: unknown; host: unknown; name: unknown; iconUrl: unknown; softwareVersion: unknown }>;
+
 	constructor(data: Partial<User>) {
 		if (data == null) return;
 

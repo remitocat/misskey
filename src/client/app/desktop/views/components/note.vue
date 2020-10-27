@@ -16,6 +16,7 @@
 		<mk-avatar class="avatar" :user="appearNote.user"/>
 		<div class="main">
 			<mk-note-header class="header" :note="appearNote" :mini="narrow"/>
+			<x-instance-info v-if="appearNote.user.instance" :instance="appearNote.user.instance" />
 			<div class="body" v-if="appearNote.deletedAt == null">
 				<p v-if="appearNote.cw != null" class="cw">
 					<mfm v-if="appearNote.cw != ''" class="text" :text="appearNote.cw" :author="appearNote.user" :i="$store.state.i" :custom-emojis="appearNote.emojis" />
@@ -78,12 +79,14 @@ import i18n from '../../../i18n';
 import XSub from './note.sub.vue';
 import noteMixin from '../../../common/scripts/note-mixin';
 import noteSubscriber from '../../../common/scripts/note-subscriber';
+import XInstanceInfo from '../../../common/views/components/instance-info.vue';
 
 export default Vue.extend({
 	i18n: i18n('desktop/views/components/note.vue'),
 
 	components: {
-		XSub
+		XSub,
+		XInstanceInfo
 	},
 
 	mixins: [
