@@ -1,3 +1,7 @@
+## [11.37.1-rei0784-4.0.0](https://github.com/TeamOrangeServer/misskey/compare/v3.0.0...v11.37.1-rei0784-4.0.0) (2020-11-01)
+
+
+
 ## [11.37.1-rei0784-3.6.0](https://github.com/TeamOrangeServer/misskey/compare/v3.0.0...v11.37.1-rei0784-3.6.0) (2020-10-27)
 
 
