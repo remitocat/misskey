@@ -73,13 +73,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import i18n from '../../../i18n';
 import { copyright, host } from '../../../config';
 import { concat } from '../../../../../prelude/array';
 import { toUnicode } from 'punycode';
 
-export default Vue.extend({
+export default defineComponent({
 	i18n: i18n('mobile/views/pages/welcome.vue'),
 	data() {
 		return {

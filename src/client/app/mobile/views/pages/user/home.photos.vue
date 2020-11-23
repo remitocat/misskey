@@ -13,11 +13,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import i18n from '../../../../i18n';
 import { getStaticImageUrl } from '../../../../common/scripts/get-static-image-url';
 
-export default Vue.extend({
+export default defineComponent({
 	i18n: i18n('mobile/views/pages/user/home.photos.vue'),
 	props: ['user'],
 	data() {

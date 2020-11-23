@@ -14,12 +14,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import i18n from '../../../i18n';
 import XCalendar from './activity.calendar.vue';
 import XChart from './activity.chart.vue';
 
-export default Vue.extend({
+export default defineComponent({
 	i18n: i18n('desktop/views/components/activity.vue'),
 	components: {
 		XCalendar,

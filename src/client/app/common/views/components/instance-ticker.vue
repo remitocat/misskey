@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import { query as urlQuery } from '../../../../../prelude/url';
 type II = {
 	host?: string;
@@ -19,7 +19,7 @@ type II = {
 	softwareVersion?: string;
 	iconUrl?: string;
 };
-export default Vue.extend({ 
+export default defineComponent({ 
 	props: ['instance'],
 	data() {
 		return {

@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import { emojilist } from '../../../../../misc/emojilist';
 import contains from '../../../common/scripts/contains';
 import { twemojiSvgBase } from '../../../../../misc/twemoji-base';
@@ -72,7 +72,7 @@ for (const x of lib) {
 
 emjdb.sort((a, b) => a.name.length - b.name.length);
 
-export default Vue.extend({
+export default defineComponent({
 	props: {
 		type: {
 			type: String,

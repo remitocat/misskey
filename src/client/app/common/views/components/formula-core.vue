@@ -4,10 +4,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import * as katex from 'katex';
 
-export default Vue.extend({
+export default defineComponent({
 	props: {
 		formula: {
 			type: String,
