@@ -58,12 +58,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import i18n from '../../i18n';
 import { faGrin } from '@fortawesome/free-regular-svg-icons';
 import { unique } from '../../../../prelude/array';
 
-export default Vue.extend({
+export default defineComponent({
 	i18n: i18n('admin/views/emoji.vue'),
 	data() {
 		return {

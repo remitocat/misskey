@@ -18,14 +18,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import { faInbox } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import ApexCharts from 'apexcharts';
 
 const limit = 150;
 
-export default Vue.extend({
+export default defineComponent({
 	data() {
 		return {
 			stats: [],

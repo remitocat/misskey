@@ -88,7 +88,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import i18n from '../../i18n';
 import XCpuMemory from "./dashboard.cpu-memory.vue";
 import XQueue from "./dashboard.queue-charts.vue";
@@ -98,7 +98,7 @@ import { faDatabase } from '@fortawesome/free-solid-svg-icons';
 import MarqueeText from 'vue-marquee-text-component';
 import randomColor from 'randomcolor';
 
-export default Vue.extend({
+export default defineComponent({
 	i18n: i18n('admin/views/dashboard.vue'),
 
 	components: {

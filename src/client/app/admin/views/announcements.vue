@@ -25,11 +25,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import i18n from '../../i18n';
 import { faBroadcastTower, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-export default Vue.extend({
+export default defineComponent({
 	i18n: i18n('admin/views/announcements.vue'),
 	data() {
 		return {

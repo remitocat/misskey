@@ -28,14 +28,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from '@vue/composition-api';
 import i18n from '../../i18n';
 import ApexCharts from 'apexcharts';
 import * as tinycolor from 'tinycolor2';
 import { faStopwatch, faPlayCircle as fasPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { faStopCircle, faPlayCircle as farPlayCircle } from '@fortawesome/free-regular-svg-icons';
 
-export default Vue.extend({
+export default defineComponent({
 	i18n: i18n('admin/views/queue.vue'),
 
 	props: {
