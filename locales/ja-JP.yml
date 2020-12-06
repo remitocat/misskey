@@ -420,6 +420,21 @@ auth/views/index.vue:
   error: "セッションが存在しません。"
   sign-in: "サインインしてください"
 
+miauth/views/index.vue:
+  loading: "読み込み中"
+  denied: "アプリケーションの連携をキャンセルしました。"
+  denied-paragraph: "このアプリがあなたのアカウントにアクセスすることはありません。"
+  already-authorized: "このアプリは既に連携済みです"
+  allowed: "アプリケーションの連携を許可しました"
+  callback-url: "アプリケーションに戻っています"
+  please-go-back: "アプリケーションに戻って、やっていってください。"
+  error: "セッションが存在しません。"
+  sign-in: "サインインしてください"
+  share-access: "\"{name}\"があなたのアカウントにアクセスすることを許可しますか？"
+  permission-ask: "このアプリは次の権限を要求しています:"
+  cancel: "キャンセル"
+  accept: "アクセスを許可"
+
 common/views/pages/explore.vue:
   verified-users: "公式アカウント"
   pinned-users: "ピン留めされたユーザー"
