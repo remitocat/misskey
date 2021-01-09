@@ -194,6 +194,8 @@ common:
     once-public: "リモートフォロワーとローカル"
     once-home: "リモートフォロワーとホーム"
     once-specified: "リモートフォロワーのみ"
+    users: "ログインユーザー"
+    users-desc: "ローカルのログインユーザーにのみ公開"
 
   note-placeholders:
     a: "今どうしてる？"
@@ -836,6 +838,8 @@ common/views/components/visibility-chooser.vue:
   once-public-desc: "リモートでの二次拡散を拒否する"
   once-home: "リモートフォロワーとホーム"
   once-specified: "リモートフォロワーのみ"
+  users: "ログインユーザー"
+  users-desc: "ローカルのログインユーザーにのみ公開"
 
 common/views/components/trends.vue:
   count: "{}人が投稿"

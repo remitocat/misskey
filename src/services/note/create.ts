@@ -30,7 +30,7 @@ import { isDuplicateKeyValueError } from '../../misc/is-duplicate-key-value-erro
 import { ensure } from '../../prelude/ensure';
 import { deliverToRelays } from '../relay';
 
-type NotificationType = 'reply' | 'renote' | 'quote' | 'mention';
+type NotificationType = 'reply' | 'renote' | 'quote' | 'mention' | 'users';
 
 class NotificationManager {
 	private notifier: User;
@@ -143,6 +143,11 @@ export default async (user: User, data: Option, silent = false) => new Promise<N
 		data.localOnly = true;
 	}
 
+	// 公開範囲: ユーザーのみ はローカルのみ固定
+	if (data.visibility === 'users') {
+		data.localOnly = true;
+	}
+
 	if (data.text) {
 		data.text = data.text.trim();
 	}
@@ -238,7 +243,7 @@ export default async (user: User, data: Option, silent = false) => new Promise<N
 		}
 
 		// Pack the note
-		const noteObj = await Notes.pack(note);
+		const noteObj = await Notes.pack(note, user);
 
 		if (user.notesCount === 0) {
 			(noteObj as any).isFirstNote = true;

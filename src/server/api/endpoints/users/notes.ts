@@ -121,6 +121,7 @@ export const meta = {
 	}
 };
 
+// @ts-ignore
 export default define(meta, async (ps, me) => {
 	// Lookup user
 	const user = await getUser(ps.userId).catch(e => {

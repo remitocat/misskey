@@ -15,7 +15,7 @@ export default class extends Channel {
 	public async init(params: any) {
 		const meta = await fetchMeta();
 		if (meta.disableLocalTimeline) {
-			if (this.user == null || (!this.user.isAdmin && !this.user.isModerator)) return;
+			if (!this.user || (!this.user.isAdmin && !this.user.isModerator)) return;
 		}
 
 		// Subscribe events

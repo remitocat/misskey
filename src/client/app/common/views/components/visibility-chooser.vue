@@ -46,6 +46,13 @@
 				<span>{{ $t('local-public-desc') }}</span>
 			</div>
 		</div>
+		<div @click="choose('users')" :class="{ active: v == 'users' }">
+			<div><fa icon="user-friends"/></div>
+			<div>
+				<span>{{ $t('users') }}</span>
+				<span>{{ $t('users-desc') }}</span>
+			</div>
+		</div>
 		<div @click="choose('local-home')" :class="{ active: v == 'local-home' }">
 			<x-visibility-icon v="local-home"/>
 			<div>
@@ -66,6 +73,13 @@
 			</div>
 		</div>
 		-->
+		<div @click="choose('users')" :class="{ active: v == 'users' }">
+			<x-visibility-icon v="users"/>
+			<div>
+				<span>{{ $t('users') }}</span>
+				<span>{{ $t('users-desc') }}</span>
+			</div>
+		</div>
 	</div>
 </div>
 </template>

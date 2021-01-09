@@ -37,6 +37,9 @@
 		<div class="wrap" v-else-if="visibility == 'once-specified'" :title="$t('@.note-visibility.once-specified')">
 			<fa :icon="faSatelliteDish"/>
 		</div>
+		<div class="wrap" v-else-if="visibility == 'users'" :title="$t('@.note-visibility.users')">
+			<fa icon="user-friends"/>
+		</div>
 		<div v-if="withText" style="margin-left: 0.3em">
 			<span v-if="visibility == 'public'">{{ $t('@.note-visibility.public') }}</span>
 			<span v-else-if="visibility == 'home'">{{ $t('@.note-visibility.home') }}</span>
@@ -48,6 +51,7 @@
 			<span v-else-if="visibility == 'once-public'">{{ $t('@.note-visibility.once-public') }}</span>
 			<span v-else-if="visibility == 'once-home'">{{ $t('@.note-visibility.once-home') }}</span>
 			<span v-else-if="visibility == 'once-specified'">{{ $t('@.note-visibility.once-specified') }}</span>
+			<span v-else-if="visibility == 'users'">{{ $t('@.note-visibility.users') }}</span>
 		</div>
 	</div>
 </template>
