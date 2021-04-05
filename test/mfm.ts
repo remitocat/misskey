@@ -795,6 +795,17 @@ describe('MFM', () => {
 			});
 		});
 
+		describe('bubble', () => {
+			it('basic', () => {
+				const tokens = parse('話者「台詞」');
+				assert.deepStrictEqual(tokens, [
+					tree('bubble', [
+						text('台詞')
+					], { speaker: '話者' })
+				]);
+			});
+		});
+
 		describe('url', () => {
 			it('simple', () => {
 				const tokens = parse('https://example.com');

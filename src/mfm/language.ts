@@ -25,6 +25,7 @@ export const mfmLanguage = P.createLanguage({
 	block: r => P.alt(
 		r.title,
 		r.quote,
+		r.bubble,
 		r.search,
 		r.blockCode,
 		r.mathBlock,
@@ -43,9 +44,10 @@ export const mfmLanguage = P.createLanguage({
 		const text = input.substr(i);
 		const match = text.match(/^([【]([^【】\n]+?)[】])(\n|$)/);
 		if (!match) return P.makeFailure(i, 'not a title');
+		const raw = match[0].trim();
 		const q = match[2].trim();
 		const contents = r.inline.atLeast(1).tryParse(q);
-		return P.makeSuccess(i + match[0].length, createTree('title', contents, {}));
+		return P.makeSuccess(i + match[0].length, createTree('title', contents, { raw }));
 	})),
 	quote: r => r.startOfLine.then(P((input, i) => {
 		const text = input.substr(i);
@@ -55,6 +57,55 @@ export const mfmLanguage = P.createLanguage({
 		if (qInner == '') return P.makeFailure(i, 'not a quote');
 		const contents = r.root.tryParse(qInner);
 		return P.makeSuccess(i + quote.join('\n').length + 1, createTree('quote', contents, {}));
+	})),
+	bubble: r => r.startOfLine.then(P((input, i) => {
+		try {
+			const text = input.substr(i);
+			// @ts-ignore
+			// @ts-ignore
+			const match = [
+				['\'', '\''],
+				['"', '"'],
+				['‘', '’'],
+				['“', '”'],
+				['‚', '‘'],
+				['„', '“'],
+				['‚', '’'],
+				['„', '”'],
+				['‹', '›'],
+				['«', '»'],
+				['›', '‹'],
+				['»', '«'],
+				['｢', '｣'],
+				['「', '」'],
+				['『', '』'],
+				['“', '”'],
+				['‘', '’'],
+				['〝', '〟'],
+				['〝', '〞'],
+				['“', '„']
+			].map(([s, e]) => [
+				[new RegExp(`^((?::\\w+:)+[^:\\n]*(?::\\w+:)*|(?::\\w+:)*[^:\\n]+(?::\\w+:)*|(?::\\w+:)*[^:\\n]*(?::\\w+:)+): ${s}(.+?)${e}(?:\\n|$)`)],
+				...['：', '―', '—'].map(x => [
+					new RegExp(`^([^${s}${e}\\n]+)${s}(.+?)${e}(?:\\n|$)`),
+					new RegExp(`^([^${x}\\n]+)${x}${s}(.+?)${e}(?:\\n|$)`)
+				])
+			]).reduce((a, c) => [...a, ...c], [])
+				.reduce((a, c) => [...a, ...c], [])
+				// @ts-ignore
+				.reduce<RegExpMatchArray>((a, c) => a || text.match(c), null);
+			if (!match) return P.makeFailure(i, 'not a bubble');
+			// @ts-ignore
+			const raw = match[0].trim();
+			// @ts-ignore
+			const speaker = r.inline.atLeast(1).tryParse(match[1].trim());
+			// @ts-ignore
+			const contents = r.inline.atLeast(1).tryParse(match[2].trim());
+			// @ts-ignore
+			return P.makeSuccess(i + match[0].length, createTree('bubble', contents, { speaker, raw }));
+		} catch (e) {
+			return P.makeFailure(i, e);
+		}
 	})),
 	search: r => r.startOfLine.then(P((input, i) => {
 		const text = input.substr(i);
@@ -87,6 +138,8 @@ export const mfmLanguage = P.createLanguage({
 		r.sup,
 		r.sub,
 		r.strike,
+		r.rt,
+		r.rtc,
 		r.motion,
 		r.xspin,
 		r.yspin,
@@ -139,6 +192,20 @@ export const mfmLanguage = P.createLanguage({
 		return P.alt(paren, xml).map(x => createTree('sub', r.inline.atLeast(1).tryParse(x), {}));
 	},
 	strike: r => P.regexp(/~~([^\n~]+?)~~/, 1).map(x => createTree('strike', r.inline.atLeast(1).tryParse(x), {})),
+	rt: r => P((input, i) => {
+		const text = input.substr(i);
+		const match = text.match(/^[|｜]([^|｜《》〈〉]+)《(.+?)》/);
+		if (!match) return P.makeFailure(i, 'not a rt');
+		const [raw, content, rt] = match;
+		return P.makeSuccess(i + raw.length, { content, rt, raw });
+	}).map(({ content, rt, raw }) => createTree('rt', r.inline.atLeast(1).tryParse(content), { rt, raw })),
+	rtc: r => P((input, i) => {
+		const text = input.substr(i);
+		const match = text.match(/^[|｜]([^〈〉]+)〈(.+?)〉/);
+		if (!match) return P.makeFailure(i, 'not a rtc');
+		const [raw, content, rtc] = match;
+		return P.makeSuccess(i + raw.length, { content, rtc, raw });
+	}).map(({ content, rtc, raw }) => createTree('rtc', r.inline.atLeast(1).tryParse(content), { rtc, raw })),
 	motion: r => {
 		const paren = P.regexp(/\(\(\(([\s\S]+?)\)\)\)/, 1);
 		const xml = P.regexp(/<motion>(.+?)<\/motion>/, 1);

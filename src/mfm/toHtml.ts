@@ -60,6 +60,18 @@ export function toHtml(tokens: MfmForest | null, mentionedRemoteUsers: IMentione
 			return el;
 		},
 
+		rt(token) {
+			const el = doc.createElement('span');
+			appendChildren(token.children, el);
+			return el;
+		},
+
+		rtc(token) {
+			const el = doc.createElement('span');
+			appendChildren(token.children, el);
+			return el;
+		},
+
 		motion(token) {
 			const el = doc.createElement('i');
 			appendChildren(token.children, el);
@@ -232,6 +244,12 @@ export function toHtml(tokens: MfmForest | null, mentionedRemoteUsers: IMentione
 			}
 			a.textContent = acct;
 			return a;
+		},
+
+		bubble(token) {
+			const el = doc.createElement('div');
+			appendChildren(token.children, el);
+			return el;
 		},
 
 		quote(token) {

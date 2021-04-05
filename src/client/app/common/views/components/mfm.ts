@@ -315,6 +315,24 @@ export default Vue.component('misskey-flavored-markdown', {
 					}, genEl(token.children));
 				}
 
+				case 'rt': {
+					return [createElement('ruby', [
+						createElement('rb', genEl(token.children)),
+						createElement('rp', '《'),
+						createElement('rt', genEl(token.node.props.rt)),
+						createElement('rp', '》')
+					])];
+				}
+
+				case 'rtc': {
+					return [createElement('ruby', [
+						createElement('rbc', genEl(token.children)),
+						createElement('rp', '〈'),
+						createElement('rtc', genEl(token.node.props.rtc)),
+						createElement('rp', '〉')
+					])];
+				}
+
 				case 'spin': {
 					motionCount++;
 					const isLong = sumTextsLength(token.children) > 10 || countNodesF(token.children) > 5;
@@ -492,6 +510,17 @@ export default Vue.component('misskey-flavored-markdown', {
 							inline: true
 						}
 					})];
+				}
+
+				case 'bubble': {
+					return [createElement('div', {
+						attrs: {
+							class: 'bubble'
+						}
+					}, [
+						genEl(token.node.props.speaker),
+						createElement('div', genEl(token.children))
+					])];
 				}
 
 				case 'quote': {
