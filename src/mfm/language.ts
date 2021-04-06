@@ -61,7 +61,8 @@ export const mfmLanguage = P.createLanguage({
 	})),
 	bubble: r => r.startOfLine.then(P((input, i) => {
 		const text = input.substr(i);
-		const match = text.match(/^([^「」]+)「(.+?)」(?:\n|$)/) || text.match(/^([^：]+)：(.+?)(?:\n|$)/) || text.match(/^((?::\w+:)+[^:]*(?::\w+:)*|(?::\w+:)*[^:]+(?::\w+:)*|(?::\w+:)*[^:]*(?::\w+:)+): (.+?)(?:\n|$)/);
+		//const match = text.match(/^([^「」]+)「(.+?)」(?:\n|$)/) || text.match(/^([^：]+)：(.+?)(?:\n|$)/) || text.match(/^((?::\w+:)+[^:]*(?::\w+:)*|(?::\w+:)*[^:]+(?::\w+:)*|(?::\w+:)*[^:]*(?::\w+:)+): (.+?)(?:\n|$)/);
+		const match = text.match(/^([^「」]+)「(.+?)」(?:\n|$)/) || text.match(/^([^：]+)：(.+?)(?:\n|$)/)
 		if (!match) return P.makeFailure(i, 'not a bubble');
 		const speaker = r.inline.atLeast(1).tryParse(match[1].trim());
 		const contents = r.inline.atLeast(1).tryParse(match[2].trim());
@@ -257,10 +258,10 @@ export const mfmLanguage = P.createLanguage({
 	hashtag: () => P((input, i) => {
 		const text = input.substr(i);
 		const match = text.match(/^#([^\s.,!?'"#:\/()\[\]【】]+)/i);
-		//m544
+		/*m544
 		// eslint-disable-next-line no-useless-escape
 		// const match = text.match(/^#([^\s\.,!\?'"#:\/()\[\]]+)/i);
-    //end
+    //end*/
 		if (!match) return P.makeFailure(i, 'not a hashtag');
 		const hashtag = match[1];
 		if (hashtag.match(/^(\u20e3|\ufe0f)/)) return P.makeFailure(i, 'not a hashtag');
