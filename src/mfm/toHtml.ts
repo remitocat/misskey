@@ -48,6 +48,12 @@ export function toHtml(tokens: MfmForest | null, mentionedRemoteUsers: IMentione
 			return el;
 		},
 
+		serif(token) {
+			const el = doc.createElement('span');
+			appendChildren(token.children, el);
+			return el;
+		},
+
 		sup(token) {
 			const el = doc.createElement('sup');
 			appendChildren(token.children, el);

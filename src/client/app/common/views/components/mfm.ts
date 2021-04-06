@@ -58,9 +58,11 @@ export default Vue.component('misskey-flavored-markdown', {
 		const validTime = (t: string | null | undefined) => {
 			if (t == null) return null;
 			return t.match(/^[0-9.]+s$/) ? t : null;
-		}
+		};
 
+		// @ts-ignore
 		const genEl = (ast: MfmForest): VNode[] => concat(ast.map((token): VNode[] => {
+			// tslint:disable-next-line:max-switch-cases
 			switch (token.node.type) {
 				case 'text': {
 					const text = token.node.props.text.replace(/(\r\n|\n|\r)/g, '\n');
@@ -81,6 +83,14 @@ export default Vue.component('misskey-flavored-markdown', {
 
 				case 'strike': {
 					return [createElement('del', genEl(token.children))];
+				}
+
+				case 'serif': {
+					return (createElement as any)('span', {
+						attrs: {
+							style: 'font-family:vdl-v7mincho,serif'
+						},
+					}, genEl(token.children));
 				}
 
 				case 'italic': {
@@ -233,7 +243,7 @@ export default Vue.component('misskey-flavored-markdown', {
 								token.node.props.args.math ? 'math' :
 								null;
 							//style = `font-size: ${size || 'unset'}; color: ${color || 'unset'}`;
-							style = `font-size: ${size || 'unset'}; color: ${color || 'unset'}; font-family: ${family|| 'unset'}`;
+							style = `font-size: ${size || 'unset'}; color: ${color || 'unset'}; font-family: ${family || 'unset'}`;
 							break;
 						}
 						case 'x2': {

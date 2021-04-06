@@ -43,6 +43,7 @@ export const mfmLanguage = P.createLanguage({
 	title: r => r.startOfLine.then(P((input, i) => {
 		const text = input.substr(i);
 		const match = text.match(/^([【]([^【】\n]+?)[】])(\n|$)/);
+		//const match = text.match(/^(\[([^\\[\]\n]+?)\])(\n|$)/) || text.match(/^(【([^【】\n]+?)】)(\n|$)/);
 		if (!match) return P.makeFailure(i, 'not a title');
 		const raw = match[0].trim();
 		const q = match[2].trim();
@@ -59,53 +60,12 @@ export const mfmLanguage = P.createLanguage({
 		return P.makeSuccess(i + quote.join('\n').length + 1, createTree('quote', contents, {}));
 	})),
 	bubble: r => r.startOfLine.then(P((input, i) => {
-		try {
-			const text = input.substr(i);
-			// @ts-ignore
-			// @ts-ignore
-			const match = [
-				['\'', '\''],
-				['"', '"'],
-				['‘', '’'],
-				['“', '”'],
-				['‚', '‘'],
-				['„', '“'],
-				['‚', '’'],
-				['„', '”'],
-				['‹', '›'],
-				['«', '»'],
-				['›', '‹'],
-				['»', '«'],
-				['｢', '｣'],
-				['「', '」'],
-				['『', '』'],
-				['“', '”'],
-				['‘', '’'],
-				['〝', '〟'],
-				['〝', '〞'],
-				['“', '„']
-			].map(([s, e]) => [
-				[new RegExp(`^((?::\\w+:)+[^:\\n]*(?::\\w+:)*|(?::\\w+:)*[^:\\n]+(?::\\w+:)*|(?::\\w+:)*[^:\\n]*(?::\\w+:)+): ${s}(.+?)${e}(?:\\n|$)`)],
-				...['：', '―', '—'].map(x => [
-					new RegExp(`^([^${s}${e}\\n]+)${s}(.+?)${e}(?:\\n|$)`),
-					new RegExp(`^([^${x}\\n]+)${x}${s}(.+?)${e}(?:\\n|$)`)
-				])
-			]).reduce((a, c) => [...a, ...c], [])
-				.reduce((a, c) => [...a, ...c], [])
-				// @ts-ignore
-				.reduce<RegExpMatchArray>((a, c) => a || text.match(c), null);
-			if (!match) return P.makeFailure(i, 'not a bubble');
-			// @ts-ignore
-			const raw = match[0].trim();
-			// @ts-ignore
-			const speaker = r.inline.atLeast(1).tryParse(match[1].trim());
-			// @ts-ignore
-			const contents = r.inline.atLeast(1).tryParse(match[2].trim());
-			// @ts-ignore
-			return P.makeSuccess(i + match[0].length, createTree('bubble', contents, { speaker, raw }));
-		} catch (e) {
-			return P.makeFailure(i, e);
-		}
+		const text = input.substr(i);
+		const match = text.match(/^([^「」]+)「(.+?)」(?:\n|$)/) || text.match(/^([^：]+)：(.+?)(?:\n|$)/) || text.match(/^((?::\w+:)+[^:]*(?::\w+:)*|(?::\w+:)*[^:]+(?::\w+:)*|(?::\w+:)*[^:]*(?::\w+:)+): (.+?)(?:\n|$)/);
+		if (!match) return P.makeFailure(i, 'not a bubble');
+		const speaker = r.inline.atLeast(1).tryParse(match[1].trim());
+		const contents = r.inline.atLeast(1).tryParse(match[2].trim());
+		return P.makeSuccess(i + match[0].length, createTree('bubble', contents, { speaker }));
 	})),
 	search: r => r.startOfLine.then(P((input, i) => {
 		const text = input.substr(i);
@@ -135,6 +95,7 @@ export const mfmLanguage = P.createLanguage({
 		r.bold,
 		r.small,
 		r.italic,
+		r.serif,
 		r.sup,
 		r.sub,
 		r.strike,
@@ -181,20 +142,25 @@ export const mfmLanguage = P.createLanguage({
 
 		return P.alt(xml, underscore).map(x => createTree('italic', r.inline.atLeast(1).tryParse(x), {}));
 	},
+	serif: r => {
+		const xml = P.regexp(/<m>([\s\S]+?)<\/m>/, 1);
+		const backslash = P.regexp(/\\([^([][\s\S]*?)\\(?![\)\]])/, 1);
+		return P.alt(xml, backslash).map(x => createTree('serif', r.inline.atLeast(1).tryParse(x), {}));
+	},
 	sup: r => {
-		const paren = P.regexp(/\(\(\(([\s\S]+?)\)\)\)/, 1);
+		//const paren = P.regexp(/\(\(\(([\s\S]+?)\)\)\)/, 1);
 		const xml = P.regexp(/<sup>(.+?)<\/sup>/, 1);
-		return P.alt(paren, xml).map(x => createTree('sup', r.inline.atLeast(1).tryParse(x), {}));
+		return P.alt(/*paren, */xml).map(x => createTree('sup', r.inline.atLeast(1).tryParse(x), {}));
 	},
 	sub: r => {
-		const paren = P.regexp(/\(\(\(([\s\S]+?)\)\)\)/, 1);
+		//const paren = P.regexp(/\(\(\(([\s\S]+?)\)\)\)/, 1);
 		const xml = P.regexp(/<sub>(.+?)<\/sub>/, 1);
-		return P.alt(paren, xml).map(x => createTree('sub', r.inline.atLeast(1).tryParse(x), {}));
+		return P.alt(/*paren, */xml).map(x => createTree('sub', r.inline.atLeast(1).tryParse(x), {}));
 	},
 	strike: r => P.regexp(/~~([^\n~]+?)~~/, 1).map(x => createTree('strike', r.inline.atLeast(1).tryParse(x), {})),
 	rt: r => P((input, i) => {
 		const text = input.substr(i);
-		const match = text.match(/^[|｜]([^|｜《》〈〉]+)《(.+?)》/);
+		const match = text.match(/^([|｜])([^|｜《》〈〉]+)《(.+?)》/);
 		if (!match) return P.makeFailure(i, 'not a rt');
 		const [raw, content, rt] = match;
 		return P.makeSuccess(i + raw.length, { content, rt, raw });
@@ -215,10 +181,19 @@ export const mfmLanguage = P.createLanguage({
 		return P((input, i) => {
 			const text = input.substr(i);
 			const match = text.match(/^<spin(\s[a-z]+?)?>(.+?)<\/spin>/i);
-			if (!match) return P.makeFailure(i, 'not a spin');
-			return P.makeSuccess(i + match[0].length, {
-				content: match[2], attr: match[1] ? match[1].trim() : null
-			});
+			const matchC = text.match(/^\[\[\[([\s\S]+?)\]\]\]/i);
+
+			if (match) {
+				return P.makeSuccess(i + match[0].length, {
+					content: match[2], attr: match[1] ? match[1].trim() : null
+				});
+			} else if (matchC) {
+				return P.makeSuccess(i + matchC[0].length, {
+					content: matchC[1], attr: null
+				});
+			} else {
+				return P.makeFailure(i, 'not a spin');
+			}
 		}).map(x => createTree('spin', r.inline.atLeast(1).tryParse(x.content), { attr: x.attr }));
 	},
 	xspin: r => {
@@ -241,7 +216,7 @@ export const mfmLanguage = P.createLanguage({
 			});
 		}).map(x => createTree('yspin', r.inline.atLeast(1).tryParse(x.content), { attr: x.attr }));
 	},
-	jump: r => P.regexp(/<jump>(.+?)<\/jump>/, 1).map(x => createTree('jump', r.inline.atLeast(1).tryParse(x), {})),
+	jump: r => P.alt(P.regexp(/<jump>(.+?)<\/jump>/, 1), P.regexp(/\{\{\{([\s\S]+?)\}\}\}/, 1)).map(x => createTree('jump', r.inline.atLeast(1).tryParse(x), {})),
 	flip: r => P.regexp(/<flip>(.+?)<\/flip>/, 1).map(x => createTree('flip', r.inline.atLeast(1).tryParse(x), {})),
 	vflip: r => P.regexp(/<vflip>(.+?)<\/vflip>/, 1).map(x => createTree('vflip', r.inline.atLeast(1).tryParse(x), {})),
 	rotate: r => {

@@ -282,6 +282,17 @@ describe('MFM', () => {
 				]);
 			});
 
+			it('かっこ', () => {
+				const tokens = parse('[[[foo]]]');
+				assert.deepStrictEqual(tokens, [
+					tree('spin', [
+						text('foo')
+					], {
+						attr: null
+					}),
+				]);
+			});
+
 			it('emoji', () => {
 				const tokens = parse('<spin>:foo:</spin>');
 				assert.deepStrictEqual(tokens, [
@@ -346,8 +357,16 @@ describe('MFM', () => {
 			]);
 		});
 
+		it('jump かっこ', () => {
+			const tokens = parse('{{{foo}}}');
+			assert.deepStrictEqual(tokens, [
+				tree('jump', [
+					text('foo')
+				], {}),
+			]);
+		});
+
 		describe('motion', () => {
-			/*
 			it('by triple brackets', () => {
 				const tokens = parse('(((foo)))');
 				assert.deepStrictEqual(tokens, [
@@ -356,9 +375,7 @@ describe('MFM', () => {
 					], {}),
 				]);
 			});
-			*/
 
-			/*
 			it('by triple brackets (with other texts)', () => {
 				const tokens = parse('bar(((foo)))bar');
 				assert.deepStrictEqual(tokens, [
@@ -369,7 +386,6 @@ describe('MFM', () => {
 					text('bar'),
 				]);
 			});
-			*/
 
 			it('by <motion> tag', () => {
 				const tokens = parse('<motion>foo</motion>');
