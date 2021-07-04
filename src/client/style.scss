@@ -11,6 +11,12 @@
 	padding: 5px;
 }
 
+._noSelect {
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+}
+
 ._button {
 	appearance: none;
 	padding: 0;
