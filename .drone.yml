@@ -15,7 +15,7 @@ steps:
 
 ---
 kind: pipeline
-name: default
+name: docker
 
 steps:
 - name: test
