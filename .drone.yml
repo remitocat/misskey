@@ -13,6 +13,8 @@ steps:
     #- cp test/test.yml .config
     #- yarn test
 
+#todo redis and pg run
+
 ---
 kind: pipeline
 name: docker
