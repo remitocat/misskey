@@ -48,7 +48,15 @@ gulp.task('build:copy:docs', () =>
 	gulp.src('./src/docs/*/*.md').pipe(gulp.dest('./built/docs/'))
 );
 
-gulp.task('build:copy', gulp.parallel('build:copy:views', 'build:copy:fonts', 'build:copy:docs', () =>
+gulp.task('build:copy:lib:cubism-core', () =>
+	gulp.src('./lib/CubismCore/**/*').pipe(gulp.dest('./built/assets/lib/CubismCore'))
+);
+
+gulp.task('build:copy:misskey-assets', () =>
+	gulp.src('./misskey-assets/live2d/**/*').pipe(gulp.dest('./built/assets/live2d'))
+);
+
+gulp.task('build:copy', gulp.parallel('build:copy:locales', 'build:copy:views', 'build:client:script', 'build:client:style', 'build:copy:fonts', 'build:copy:lib:cubism-core', 'build:copy:misskey-assets', () =>
 	gulp.src([
 		'./src/const.json',
 		'./src/emojilist.json',
