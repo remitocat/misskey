@@ -15,7 +15,7 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import define from '../../define-widget';
 import { load as loadLive2d } from '../../scripts/live2d/index';
 const widget = define({
-	name: 'ai',
+	name: 'aichan',
 	props: () => ({
 		compact: {
 			type: 'boolean',
