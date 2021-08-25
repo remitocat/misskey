@@ -25,7 +25,7 @@ if (isDebug) {
 }
 
 gulp.task('build:ts', () => {
-	const tsProject = ts.createProject('./tsconfig.json');
+	const tsProject = ts.createProject('./src/tsconfig.json');
 
 	return tsProject
 		.src()
@@ -49,14 +49,14 @@ gulp.task('build:copy:docs', () =>
 );
 
 gulp.task('build:copy:lib:cubism-core', () =>
-	gulp.src('./lib/CubismCore/**/*').pipe(gulp.dest('./built/assets/lib/CubismCore'))
+	gulp.src('./lib/CubismCore/**/*').pipe(gulp.dest('./built/client/assets/lib/CubismCore'))
 );
 
 gulp.task('build:copy:misskey-assets', () =>
-	gulp.src('./misskey-assets/live2d/**/*').pipe(gulp.dest('./built/assets/live2d'))
+	gulp.src('./misskey-assets/live2d/**/*').pipe(gulp.dest('./built/client/assets/live2d'))
 );
 
-gulp.task('build:copy', gulp.parallel('build:copy:locales', 'build:copy:views', 'build:client:script', 'build:client:style', 'build:copy:fonts', 'build:copy:lib:cubism-core', 'build:copy:misskey-assets', () =>
+gulp.task('build:copy', gulp.parallel('build:copy:views', 'build:copy:fonts', 'build:copy:docs', 'build:copy:lib:cubism-core', 'build:copy:misskey-assets', () =>
 	gulp.src([
 		'./src/const.json',
 		'./src/emojilist.json',
