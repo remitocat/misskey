@@ -1,7 +1,7 @@
 <template>
 <div class="mkw-aichan">
 	<ui-container :show-header="!props.compact">
-		<template #header><fa :icon="faGlobe"/>AI</template>
+		<template #header><fa :icon="faGlobeyarn "/>AI</template>
 
 		<canvas class="dedjhjmo" ref="canvas" @click="touched"></canvas>
 	</ui-container>
