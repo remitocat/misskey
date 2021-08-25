@@ -424,6 +424,7 @@ common:
     tips: "ヒント"
     hashtags: "ハッシュタグ"
     queue: "キュー"
+    ai: "藍"
 
   dev: "アプリの作成に失敗しました。再度お試しください。"
   ai-chan-kawaii: "藍ちゃかわいい"
