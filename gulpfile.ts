@@ -48,7 +48,7 @@ gulp.task('build:copy:docs', () =>
 	gulp.src('./src/docs/*/*.md').pipe(gulp.dest('./built/docs/'))
 );
 
-gulp.task('build:copy', gulp.parallel('build:copy:views', 'build:copy:fonts', 'build:copy:docs', 'build:copy:lib:cubism-core', () =>
+gulp.task('build:copy', gulp.parallel('build:copy:views', 'build:copy:fonts', 'build:copy:docs', () =>
 	gulp.src([
 		'./src/const.json',
 		'./src/emojilist.json',
