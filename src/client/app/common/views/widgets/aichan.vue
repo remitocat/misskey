@@ -3,7 +3,7 @@
 	<ui-container :show-header="!props.compact">
 		<template #header><fa :icon="faGlobeyarn "/>AI</template>
 
-		<iframe class="dedjhjmo" ref="live2d" @click="touched" src="https://misskey-dev.github.io/mascot-web/?scale=1.5&y=1.1&eyeY=100"></iframe>
+		<iframe class="dedjhjmo" ref="live2d" @click="touched" :src="mascotUrl"></iframe>
 	</ui-container>
 </div>
 </template>
@@ -12,7 +12,10 @@
 import { defineComponent, markRaw } from '@vue/composition-api';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 
+import { ColdDeviceStorage } from '../../../store';
 import define from '../../define-widget';
+
+const mascotUrl = ColdDeviceStorage.get('mascot_widget_url');
 
 const widget = define({
 	name: 'aichan',
@@ -28,6 +31,7 @@ export default defineComponent({
 	data() {
 		return {
 			faGlobe,
+			mascotUrl,
 		};
 	},
 	mounted() {
