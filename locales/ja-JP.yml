@@ -363,7 +363,7 @@ common:
     mascot: "マスコット"
     _mascot:
       widget-url: "ウィジェットのURL"
-      widget-url-desc: "藍ウィジェットで使用するサーバーのURLを設定します。"
+      widget-url-desc: "信用できるサーバー以外使用しないでください。藍ウィジェットで使用するサーバーのURLを設定します。"
 
   search: "検索"
   delete: "削除"
