@@ -14,7 +14,6 @@
 	"main": "./index.js",
 	"private": true,
 	"scripts": {
-		"postinstall": "cd lib/CubismWebFramework && npm install",
 		"start": "node ./index.js",
 		"init": "npm run migrate",
 		"ormconfig": "node ./built/ormconfig.js",
