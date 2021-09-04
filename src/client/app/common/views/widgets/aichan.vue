@@ -3,7 +3,7 @@
 	<ui-container :show-header="!props.compact">
 		<template #header><fa :icon="faGlobeyarn "/>AI</template>
 
-		<canvas class="dedjhjmo" ref="canvas" @click="touched"></canvas>
+		<iframe class="dedjhjmo" ref="live2d" @click="touched" src="https://misskey-dev.github.io/mascot-web/"></iframe>
 	</ui-container>
 </div>
 </template>
@@ -27,21 +27,20 @@ export default defineComponent({
 	extends: widget,
 	data() {
 		return {
-			live2d: null as any,
 			faGlobe,
 		};
 	},
 	mounted() {
-		this.$nextTick(() => {
-			import('../../scripts/live2d/index')
-				.then(({ load }) => load(this.$refs.canvas, {
-					scale: 1.6,
-					y: 1.1
-				}))
-				.then(live2d => {
-					this.live2d = markRaw(live2d);
-				});
-		});
+		const iframeRect = this.$refs.live2d.getBoundingClientRect();
+		window.addEventListener('mousemove', ev => {
+			this.$refs.live2d.contentWindow.postMessage({
+				type: 'moveCursor',
+				body: {
+					clientX: ev.clientX - iframeRect.left,
+					clientY: ev.clientY - iframeRect.top,
+				}
+			}, '*');
+		}, { passive: true });
 	},
 	methods: {
 		touched() {
@@ -55,5 +54,6 @@ export default defineComponent({
 .dedjhjmo {
 	width: 100%;
 	height: 350px;
+	border: none;
 }
 </style>
