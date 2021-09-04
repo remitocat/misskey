@@ -22,6 +22,21 @@
 * [TenCha](https://github.com/coke12103/TenCha)
   * isLadyをサポート
 
+## ライブラリ
+
+* [Mi.py](https://github.com/yupix/Mi.py)
+  * **プレビュー版**
+  * bot向けフレームワーク
+  * ayuskey動作保証、misskey(v12)対応
+
+<details>
+<summary>内部</summary>
+
+* [@ayuskey/summaly](https://github.com/TeamBlackCrystal/summaly)
+  * 微調整が施されたsummaly
+
+</details>
+
 ## Contribution
 
 ### Collaborators
@@ -33,7 +48,7 @@
  </tr>
  <tr>
   <td align="center"><a href="https://github.com/sousuke0422">@sousuke0422</a></td>
-	<td align="center"><a href="https://github.com/sousuke0422">@yupix</a></td>
+	<td align="center"><a href="https://github.com/yupix">@yupix</a></td>
  </tr>
 </table>
 

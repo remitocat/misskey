@@ -8,11 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- XSS GHSA-669q-w6qc-75h3
+
 ### Added
 
 - html mail
 - Job Queueが詰まったとき音を鳴らす機能
 - `$[fn text]`のタイプのmfmとの簡易的な互換性確保(ネストは不可)
+- v12互換の通知api
+- Channels API
+- Clip API
+- tokenを消せるように
+- リアクション数の取得
+
+### Fixed
+
+- アンテナが動作するようになりました
+  - 既読がつかない既知の不具合があります
 
 ### Changed
 
@@ -20,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - 👍にしたい場合は設定が必要です
 - 改造以前の音源の場所を変更
 - リモートユーザーの一定以上のbioとnameを切り捨てるように
+- 検索を調整(`host:address`形式のみ)
+- CSPやCookieの調整
 
 ### Removed
 
