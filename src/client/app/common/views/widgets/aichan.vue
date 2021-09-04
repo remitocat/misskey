@@ -13,7 +13,7 @@ import { defineComponent, markRaw } from '@vue/composition-api';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 
 import define from '../../define-widget';
-import { load as loadLive2d } from '../../scripts/live2d/index';
+
 const widget = define({
 	name: 'aichan',
 	props: () => ({
@@ -27,23 +27,25 @@ export default defineComponent({
 	extends: widget,
 	data() {
 		return {
-			live2d: null,
+			live2d: null as any,
 			faGlobe,
 		};
 	},
 	mounted() {
 		this.$nextTick(() => {
-			loadLive2d(this.$refs.canvas, {
-				scale: 1.6,
-				y: 1.1
-			}).then(live2d => {
-				this.live2d = markRaw(live2d);
-			});
+			import('../../scripts/live2d/index')
+				.then(({ load }) => load(this.$refs.canvas, {
+					scale: 1.6,
+					y: 1.1
+				}))
+				.then(live2d => {
+					this.live2d = markRaw(live2d);
+				});
 		});
 	},
 	methods: {
 		touched() {
-			this.live2d.changeExpression('gurugurume');
+			if (this.live2d) this.live2d.changeExpression('gurugurume');
 		}
 	}
 });
