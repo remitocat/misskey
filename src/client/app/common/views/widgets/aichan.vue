@@ -3,7 +3,7 @@
 	<ui-container :show-header="!props.compact">
 		<template #header><fa :icon="faGlobeyarn "/>AI</template>
 
-		<iframe v-if="$store.state.aiChanMode" class="ivnzpscs" ref="live2d" src="https://misskey-dev.github.io/mascot-web/?scale=1.5&y=1.1&eyeY=100"></iframe>
+		<iframe class="dedjhjmo" ref="live2d" @click="touched" src="https://misskey-dev.github.io/mascot-web/?scale=1.5&y=1.1&eyeY=100"></iframe>
 	</ui-container>
 </div>
 </template>
