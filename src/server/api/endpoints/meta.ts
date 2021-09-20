@@ -147,6 +147,8 @@ export default define(meta, async (ps, me) => {
 		driveCapacityPerRemoteUserMb: instance.remoteDriveCapacityMb,
 		cacheRemoteFiles: instance.cacheRemoteFiles,
 		proxyRemoteFiles: instance.proxyRemoteFiles,
+		enableHcaptcha: false,
+		hcaptchaSiteKey: null,
 		enableRecaptcha: instance.enableRecaptcha,
 		recaptchaSiteKey: instance.recaptchaSiteKey,
 		swPublickey: instance.swPublicKey,
@@ -177,12 +179,14 @@ export default define(meta, async (ps, me) => {
 			localTimeLine: !instance.disableLocalTimeline,
 			globalTimeLine: !instance.disableGlobalTimeline,
 			elasticsearch: config.elasticsearch ? true : false,
+			hcaptcha: false,
 			recaptcha: instance.enableRecaptcha,
 			objectStorage: instance.useObjectStorage,
 			twitter: instance.enableTwitterIntegration,
 			github: instance.enableGithubIntegration,
 			discord: instance.enableDiscordIntegration,
 			serviceWorker: instance.enableServiceWorker,
+			miauth: false,
 		};
 	}
 
@@ -219,6 +223,7 @@ export default define(meta, async (ps, me) => {
 		response.objectStorageUseSSL = instance.objectStorageUseSSL;
 		response.objectStorageUseProxy = instance.objectStorageUseProxy;
 		response.objectStorageSetPublicRead = instance.objectStorageSetPublicRead;
+		response.objectStorageS3ForcePathStyle = instance.objectStorageS3ForcePathStyle;
 	}
 
 	return response;
