@@ -86,6 +86,26 @@ export const meta = {
 				optional: false as const, nullable: false as const,
 				description: 'Whether disabled GTL.',
 			},
+			driveCapacityPerLocalUserMb: {
+				type: 'number' as const,
+				optional: false as const, nullable: false as const
+			},
+			driveCapacityPerRemoteUserMb: {
+				type: 'number' as const,
+				optional: false as const, nullable: false as const
+			},
+			cacheRemoteFiles: {
+				type: 'boolean' as const,
+				optional: false as const, nullable: false as const
+			},
+			proxyRemoteFiles: {
+				type: 'boolean' as const,
+				optional: false as const, nullable: false as const
+			},
+			emailRequiredForSignup: {
+				type: 'boolean' as const,
+				optional: false as const, nullable: false as const
+			},
 			enableEmojiReaction: {
 				type: 'boolean' as const,
 				optional: false as const, nullable: false as const,
@@ -146,6 +166,7 @@ export default define(meta, async (ps, me) => {
 		enableEmojiReaction: instance.enableEmojiReaction,
 		driveCapacityPerLocalUserMb: instance.localDriveCapacityMb,
 		driveCapacityPerRemoteUserMb: instance.remoteDriveCapacityMb,
+		emailRequiredForSignup: instance.emailRequiredForSignup,
 		cacheRemoteFiles: instance.cacheRemoteFiles,
 		proxyRemoteFiles: instance.proxyRemoteFiles,
 		enableHcaptcha: false,
@@ -179,6 +200,7 @@ export default define(meta, async (ps, me) => {
 			registration: !instance.disableRegistration,
 			localTimeLine: !instance.disableLocalTimeline,
 			globalTimeLine: !instance.disableGlobalTimeline,
+			emailRequiredForSignup: instance.emailRequiredForSignup,
 			elasticsearch: config.elasticsearch ? true : false,
 			hcaptcha: false,
 			recaptcha: instance.enableRecaptcha,

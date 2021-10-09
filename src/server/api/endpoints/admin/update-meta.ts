@@ -158,6 +158,10 @@ export const meta = {
 			}
 		},
 
+		emailRequiredForSignup: {
+			validator: $.optional.bool,
+		},
+
 		enableRecaptcha: {
 			validator: $.optional.bool,
 			desc: {
@@ -506,6 +510,10 @@ export default define(meta, async (ps, me) => {
 
 	if (ps.proxyRemoteFiles !== undefined) {
 		set.proxyRemoteFiles = ps.proxyRemoteFiles;
+	}
+
+	if (ps.emailRequiredForSignup !== undefined) {
+		set.emailRequiredForSignup = ps.emailRequiredForSignup;
 	}
 
 	if (ps.enableRecaptcha !== undefined) {

@@ -141,6 +141,11 @@ export class Meta {
 	@Column('boolean', {
 		default: false,
 	})
+	public emailRequiredForSignup: boolean;
+
+	@Column('boolean', {
+		default: false,
+	})
 	public enableRecaptcha: boolean;
 
 	@Column('varchar', {

@@ -54,6 +54,7 @@ import { AntennaNote } from './entities/antenna-note';
 import { RelayRepository } from './repositories/relay';
 import { RegistryItem } from './entities/registry-item';
 import { ChannelRepository } from './repositories/channel';
+import { UserPending } from './entities/user-pending';
 //mute
 import { ChannelFollowing } from './entities/channel-following';
 import { ChannelNotePining } from './entities/channel-note-pining';
@@ -71,6 +72,7 @@ export const PollVotes = getRepository(PollVote);
 export const Users = getCustomRepository(UserRepository);
 export const UserProfiles = getRepository(UserProfile);
 export const UserKeypairs = getRepository(UserKeypair);
+export const UserPendings = getRepository(UserPending);
 export const AttestationChallenges = getRepository(AttestationChallenge);
 export const UserSecurityKeys = getRepository(UserSecurityKey);
 export const UserPublickeys = getRepository(UserPublickey);
