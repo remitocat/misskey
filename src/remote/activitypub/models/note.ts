@@ -29,6 +29,7 @@ import { extractApMentions } from './mention';
 import DbResolver from '../db-resolver';
 import extractEmojisFromMfm from '../../../misc/extract-emojis';
 import { parse } from '../../../mfm/parse';
+import { StatusError } from '@/misc/fetch';
 
 const logger = apLogger;
 
@@ -180,7 +181,7 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 				}
 			} catch (e) {
 				return {
-					status: e.statusCode >= 400 && e.statusCode < 500 ? 'permerror' : 'temperror'
+					status: (e instanceof StatusError && e.isClientError) ? 'permerror' : 'temperror'
 				};
 			}
 		};
@@ -297,6 +298,10 @@ export async function resolveNote(value: string | IObject, resolver?: Resolver):
 			return exist;
 		}
 		//#endregion
+
+		if (uri.startsWith(config.url)) {
+			throw new StatusError('cannot resolve local note', 400, 'cannot resolve local note');
+		}
 
 		// リモートサーバーからフェッチしてきて登録
 		// ここでuriの代わりに添付されてきたNote Objectが指定されていると、サーバーフェッチを経ずにノートが生成されるが

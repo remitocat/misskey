@@ -5,7 +5,66 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## ToDo
+
+### Added
+
+- アカウント登録にメールアドレスの設定を必須にするオプション (ayu5-email)
+
 ## [Unreleased]
+
+### Added
+
+- クライアント: メンションにユーザーのアバターを表示するように
+- インスタンスプロフィールレンダリング ready
+
+## [11.37.1-rei0784-5.17.2] 2021-12-07
+
+### Fixed
+
+- ルームを開けるように
+  - *既知の問題: `THREE.Scene: .dispose() has been removed.`が出る*
+- publishedを付けないとActivityが一部実装で除外されてしまうのを修正
+- 削除したノートやユーザーがリモートから参照されると復活することがある のを修正
+- 依存関係が更新されました。脆弱性が修正されている場合があります。
+
+## [11.37.1-rei0784-5.17.1] 2021-11-13
+
+### Fixed
+
+- Docker環境で正常にコンテナがビルドできない
+
+## [11.37.1-rei0784-5.17.0] 2021-11-13
+
+### Added
+
+- 新しいMFM: $[sparkle キラキラ]
+
+### Changed
+
+- クライアント: 画像ビューアを強化
+
+### Fixed
+
+- クライアント: CWで画像が隠されたとき、画像の高さがおかしいことになる問題を修正
+
+### Removed
+
+- iOS 15未満のサポート
+  - 対象のバージョンをお使いの方は、iOSのバージョンアップを行ってください。
+
+## [11.37.1-rei0784-5.17.0-rc.2] 2021-11-06
+
+### Changed
+
+- ストリーミング(ws)の挙動を調整
+
+### Fixed
+
+- 依存関係が更新されました。脆弱性が修正されている場合があります。
+- WebSocketが繋がらない問題を修正
+
+## [11.37.1-rei0784-5.17.0-rc.1] 2021-11-05
 
 ### Added
 
@@ -24,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 対応していないものはfalseかnullを返すように (`api:meta`)
 - オンライン状態の仕様をv12と同じものに
 - ActivityPub: deliverキューのメモリ使用量を削減
+- API: ap系のエンドポイントをログイン必須化+レートリミット追加
 
 ### Fixed
 
@@ -32,7 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 空のプッシュ通知が発生しないように
 - アカウント削除の安定性を向上
 
-## [11.37.1-rei0784-5.16.0] 2021-09-12
+## [11.37.1-rei0784-5.16.0] 2021-09-12 [YANKED]
 
 ### Security
 
@@ -158,9 +218,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - docker環境においてfilesをマウントするように
 - 内部的な修正をたくさん
 
-[Unreleased]: https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.16.0...HEAD
-[11.37.1-rei0784-5.16.0]: https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.15.0...11.37.1-rei0784-5.16.0
-[11.37.1-rei0784-5.15.0]: https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.14.0...11.37.1-rei0784-5.15.0
-[11.37.1-rei0784-5.14.0]: https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.14.0-beta.6...11.37.1-rei0784-5.14.0
+[Unreleased]: https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.17.2...HEAD
+[11.37.1-rei0784-5.17.2]:        https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.17.1...11.37.1-rei0784-5.17.2
+[11.37.1-rei0784-5.17.1]:        https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.17.0...11.37.1-rei0784-5.17.1
+[11.37.1-rei0784-5.17.0]:        https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.17.0-rc.2...11.37.1-rei0784-5.17.0
+[11.37.1-rei0784-5.17.0-rc.2]:   https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.17.0-rc.1...11.37.1-rei0784-5.17.0-rc.2
+[11.37.1-rei0784-5.17.0-rc.1]:   https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.16.0...11.37.1-rei0784-5.17.0-rc.1
+[11.37.1-rei0784-5.16.0]:        https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.15.0...11.37.1-rei0784-5.16.0
+[11.37.1-rei0784-5.15.0]:        https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.14.0...11.37.1-rei0784-5.15.0
+[11.37.1-rei0784-5.14.0]:        https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.14.0-beta.6...11.37.1-rei0784-5.14.0
 [11.37.1-rei0784-5.14.0-beta.6]: https://github.com/TeamBlackCrystal/misskey/compare/11.37.1-rei0784-5.14.0-beta.5...11.37.1-rei0784-5.14.0-beta.6
-[11.37.1-rei0784-4.0.0]: https://github.com/TeamOrangeServer/misskey/compare/v3.6.0...v11.37.1-rei0784-4.0.0
+[11.37.1-rei0784-4.0.0]:         https://github.com/TeamOrangeServer/misskey/compare/v3.6.0...v11.37.1-rei0784-4.0.0
