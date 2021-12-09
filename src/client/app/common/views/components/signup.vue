@@ -12,12 +12,22 @@
 			<template #suffix>@{{ host }}</template>
 			<template #desc>
 				<span v-if="usernameState == 'wait'" style="color:#999"><fa icon="spinner" pulse fixed-width/> {{ $t('checking') }}</span>
-				<span v-if="usernameState == 'ok'" style="color:#3CB7B5"><fa icon="check" fixed-width/> {{ $t('available') }}</span>
-				<span v-if="usernameState == 'unavailable'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('unavailable') }}</span>
-				<span v-if="usernameState == 'error'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('error') }}</span>
-				<span v-if="usernameState == 'invalid-format'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('invalid-format') }}</span>
-				<span v-if="usernameState == 'min-range'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('too-short') }}</span>
-				<span v-if="usernameState == 'max-range'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('too-long') }}</span>
+				<span v-else-if="usernameState == 'ok'" style="color:#3CB7B5"><fa icon="check" fixed-width/> {{ $t('available') }}</span>
+				<span v-else-if="usernameState == 'unavailable'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('unavailable') }}</span>
+				<span v-else-if="usernameState == 'error'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('error') }}</span>
+				<span v-else-if="usernameState == 'invalid-format'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('invalid-format') }}</span>
+				<span v-else-if="usernameState == 'min-range'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('too-short') }}</span>
+				<span v-else-if="usernameState == 'max-range'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('too-long') }}</span>
+			</template>
+		</ui-input>
+		<ui-input v-if="meta.emailRequiredForSignup" v-model="email" type="email" :autocomplete="Math.random()" spellcheck="false" required @update:modelValue="onChangeEmail" styl="fill">
+			<span>{{ $t('email-address') }}</span>
+			<template #prefix><fa icon="envelope"/></template>
+			<template #desc>
+				<span v-if="emailState == 'wait'" style="color:#999"><fa icon="spinner" pulse fixed-width/> {{ $t('checking') }}</span>
+				<span v-else-if="emailState == 'ok'" style="color:#3CB7B5"><fa icon="check" fixed-width/> {{ $t('available') }}</span>
+				<span v-else-if="emailState == 'unavailable'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('unavailable') }}</span>
+				<span v-else-if="emailState == 'error'" style="color:#FF1161"><fa icon="exclamation-triangle" fixed-width/> {{ $t('error') }}</span>
 			</template>
 		</ui-input>
 		<ui-input v-model="password" type="password" :autocomplete="Math.random()" required @input="onChangePassword" :with-password-meter="true" styl="fill">
@@ -65,8 +75,10 @@ export default Vue.extend({
 			password: '',
 			retypedPassword: '',
 			invitationCode: '',
+			email: '',
 			url,
 			usernameState: null,
+			emailState: null,
 			passwordStrength: '',
 			passwordRetypeState: null,
 			meta: {},
@@ -123,6 +135,21 @@ export default Vue.extend({
 				this.usernameState = result.available ? 'ok' : 'unavailable';
 			}).catch(err => {
 				this.usernameState = 'error';
+			});
+		},
+
+		onChangeEmail() {
+			if (this.email == '') {
+				this.emailState = null;
+				return;
+			}
+			this.emailState = 'wait';
+			os.api('email-address/available', {
+				emailAddress: this.email
+			}).then(result => {
+				this.emailState = result.available ? 'ok' : 'unavailable';
+			}).catch(err => {
+				this.emailState = 'error';
 			});
 		},
 
